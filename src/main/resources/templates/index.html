@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+
+    <!-- 반드시 이 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Index</title>
+    <link rel="stylesheet" th:href="@{/common.css}">
 </head>
 <body>
-<h1>project link deco</h1>
-<p>기본 index 페이지입니다.</p>
+
+<div class="viewport-wrapper">
+    <div class="app">
+        <header class="header">
+            <h1>LinkDeco</h1>
+            <p>모바일 중심 웹</p>
+        </header>
+
+        <main class="content">
+            <section class="card">
+                <h2>환영합니다</h2>
+                <p>PC에서도 모바일 UI처럼 보이는 화면입니다.</p>
+            </section>
+
+            <button class="primary-btn">시작하기</button>
+        </main>
+
+        <nav class="bottom-nav">
+            <span>🏠</span>
+            <span>🔍</span>
+            <span>➕</span>
+            <span>❤️</span>
+            <span>👤</span>
+        </nav>
+    </div>
+</div>
+
 </body>
 </html>

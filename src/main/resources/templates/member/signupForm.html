@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        .container { width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        .field-error { color: #dc3545; font-size: 13px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>회원가입</h2>
+    <form th:action="@{/members/signup}" th:object="${memberRequestDto}" method="post">
+
+        <div>
+            <label>이메일</label>
+            <input type="text" th:field="*{email}" placeholder="이메일을 입력하세요" required>
+            <div class="field-error" th:errors="*{email}">이메일 오류</div>
+        </div>
+
+        <div>
+            <label>비밀번호</label>
+            <input type="password" th:field="*{password}" placeholder="비밀번호를 입력하세요" required>
+            <div class="field-error" th:errors="*{password}">비밀번호 오류</div>
+        </div>
+
+        <div>
+            <label>닉네임</label>
+            <input type="text" th:field="*{nickname}" placeholder="닉네임을 입력하세요" required>
+            <div class="field-error" th:errors="*{nickname}">닉네임 오류</div>
+        </div>
+
+        <button type="submit">가입하기</button>
+    </form>
+    <p><a th:href="@{/members/login}">이미 계정이 있으신가요? 로그인</a></p>
+</div>
+</body>
+</html>
+
+<script>
+    // 페이지가 로드될 때, 브라우저 주소창의 히스토리를 현재 URL로 덮어씌웁니다.
+    // 이렇게 하면 F5를 눌렀을 때 POST(데이터 전송)가 아닌 GET(페이지 요청)이 실행됩니다.
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>

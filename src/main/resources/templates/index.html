@@ -25,6 +25,10 @@
             </section>
 
             <button class="primary-btn">시작하기</button>
+            <button type="button" class="primary-btn"
+                    th:onclick="|location.href='@{/members/signup}'|">회원가입</button>
+            <button type="button" class="primary-btn"
+                    th:onclick="|location.href='@{/members/login}'|">로그인</button>
         </main>
 
         <nav class="bottom-nav">

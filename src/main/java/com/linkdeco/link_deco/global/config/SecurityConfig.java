@@ -16,18 +16,18 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/members/signup", "/members/login", "/css/**", "/js/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/members/logout", "/members/my-page").authenticated() // 로그인이 필요한 곳
+                        .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/members/login")
-                        .loginProcessingUrl("/api/members/login")
-                        .defaultSuccessUrl("/main", true)
+                        .loginProcessingUrl("/members/login")
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/members/logout")
-                        .logoutSuccessUrl("/members/login")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)    // 세션 무효화
                         .deleteCookies("JSESSIONID")    // 쿠키 삭제
                 );

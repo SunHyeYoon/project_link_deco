@@ -3,6 +3,7 @@ package com.linkdeco.link_deco.dto;
 import com.linkdeco.link_deco.common.ValidationConstants;
 import com.linkdeco.link_deco.domain.Member;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,16 +16,21 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MemberRequestDto {
 
-    @NotBlank(message = "이메일은 필수입니다.")
-    @Size(max = ValidationConstants.MAX_EMAIL_LENGTH)
+    @Pattern(
+            regexp = ValidationConstants.EMAIL_REGEX,
+            message = "올바른 이메일 형식이 아닙니다."
+    )
     private String email;
 
-    @NotBlank(message = "비밀번호는 필수입니다.")
-    @Size(min = ValidationConstants.MIN_PASSWORD_LENGTH, max = ValidationConstants.MAX_PASSWORD_LENGTH)
+    @Pattern(
+            regexp = ValidationConstants.PW_REGEX,
+            message = "8~24자의 영문 대소문자, 숫자, 특수문자를 조합하여 설정해 주세요."
+    )
     private String password;
 
-    @NotBlank(message = "닉네임은 필수입니다.")
-    @Size(min = ValidationConstants.MIN_NICKNAME_LENGTH, max = ValidationConstants.MAX_NICKNAME_LENGTH)
+    @Pattern(
+            regexp = ValidationConstants.NICKNAME_REGEX,
+            message = "닉네임은 공백 없이 2자 이상 10자 이하여야 합니다.")
     private String nickname;
 
     @Size(max = ValidationConstants.MAX_IMAGE_URL_LENGTH)

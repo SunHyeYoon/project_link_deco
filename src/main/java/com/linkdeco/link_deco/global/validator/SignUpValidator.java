@@ -20,11 +20,10 @@ public class SignUpValidator {
     );
 
     public void validate(MemberRequestDto requestDto) {
-        validateEmail(requestDto.email());
-        validatePassword(requestDto.password());
-        validateNickname(requestDto.nickname());
+        validateEmail(requestDto.getEmail());
+        validatePassword(requestDto.getPassword());
+        validateNickname(requestDto.getNickname());
     }
-
 
     private void validateEmail(String email) {
         if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {

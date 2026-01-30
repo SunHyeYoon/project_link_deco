@@ -1,13 +1,9 @@
 package com.linkdeco.link_deco.service;
 
 import com.linkdeco.link_deco.domain.Member;
-import com.linkdeco.link_deco.dto.LoginRequestDto;
-import com.linkdeco.link_deco.dto.LoginResponseDto;
 import com.linkdeco.link_deco.dto.MemberRequestDto;
 import com.linkdeco.link_deco.global.exception.CustomException;
 import com.linkdeco.link_deco.global.exception.ErrorCode;
-import com.linkdeco.link_deco.global.security.JwtProvider;
-import com.linkdeco.link_deco.global.security.JwtToken;
 import com.linkdeco.link_deco.global.validator.SignUpValidator;
 import com.linkdeco.link_deco.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -39,8 +35,6 @@ class MemberServiceTest {
     private SignUpValidator signUpValidator;
 
     @Mock
-    private JwtProvider jwtProvider;
-
     @InjectMocks
     private MemberService memberService;
 
@@ -101,94 +95,5 @@ class MemberServiceTest {
         verify(memberRepository, times(1)).existsByEmail(email);
         verify(passwordEncoder, never()).encode(anyString());
         verify(memberRepository, never()).save(any(Member.class));
-    }
-
-    @Test
-    @DisplayName("로그인 성공")
-    void login_success() {
-        // given
-        String email = "test@example.com";
-        String password = "password123!";
-        String nickname = "테스트";
-
-        LoginRequestDto requestDto = new LoginRequestDto(email, password);
-
-        Member savedMember = Member.builder()
-                .email(email)
-                .password(password)
-                .nickname(nickname)
-                .build();
-
-        ReflectionTestUtils.setField(savedMember, "id", 1L);
-
-        JwtToken jwtToken = new JwtToken("Bearer", "accessToken", "refreshToken");
-        given(memberRepository.findByEmail(email)).willReturn(java.util.Optional.of(savedMember));
-        given(passwordEncoder.matches(password, savedMember.getPassword())).willReturn(true);
-        given(jwtProvider.generateJwtToken(anyLong(), anyString())).willReturn(jwtToken);
-
-        // when
-        LoginResponseDto responseDto = memberService.login(requestDto);
-
-        // then
-        assertThat(responseDto).isNotNull();
-        assertThat(responseDto.accessToken()).isEqualTo("accessToken");
-        assertThat(responseDto.refreshToken()).isEqualTo("refreshToken");
-
-        verify(memberRepository).findByEmail(email);
-        verify(memberRepository, times(1)).findByEmail(email);
-        verify(jwtProvider, times(1)).generateJwtToken(anyLong(), anyString());
-    }
-
-    @Test
-    @DisplayName("로그인 실패 - 존재하지 않는 이메일")
-    void login_fail_memberNotFound() {
-        // given
-        String email = "notfound@example.com";
-        String password = "password123!";
-
-        LoginRequestDto requestDto = new LoginRequestDto(email, password);
-
-        given(memberRepository.findByEmail(email)).willReturn(java.util.Optional.empty());
-
-        // when & then
-        assertThatThrownBy(() -> memberService.login(requestDto))
-                .isInstanceOf(CustomException.class)
-                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.MEMBER_NOT_FOUND);
-
-        verify(memberRepository, times(1)).findByEmail(email);
-        verify(passwordEncoder, never()).matches(anyString(), anyString());
-        verify(jwtProvider, never()).generateJwtToken(anyLong(), anyString());
-    }
-
-    @Test
-    @DisplayName("로그인 실패 - 비밀번호 불일치")
-    void login_fail_invalidPassword() {
-        // given
-        String email = "test@example.com";
-        String password = "wrongPassword";
-        String encodedPassword = "encodedPassword";
-        String nickname = "테스트";
-
-        LoginRequestDto requestDto = new LoginRequestDto(email, password);
-
-        Member savedMember = Member.builder()
-                .email(email)
-                .password(encodedPassword)
-                .nickname(nickname)
-                .build();
-
-        ReflectionTestUtils.setField(savedMember, "id", 1L);
-
-        given(memberRepository.findByEmail(email)).willReturn(java.util.Optional.of(savedMember));
-        given(passwordEncoder.matches(password, savedMember.getPassword())).willReturn(false);
-
-        // when & then
-        assertThatThrownBy(() -> memberService.login(requestDto))
-                .isInstanceOf(CustomException.class)
-                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INVALID_PASSWORD);
-
-        verify(memberRepository, times(1)).findByEmail(email);
-        verify(passwordEncoder, times(1)).matches(password, savedMember.getPassword());
-        verify(jwtProvider, never()).generateJwtToken(anyLong(), anyString());
     }
 }

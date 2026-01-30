@@ -49,4 +49,12 @@ public class MemberController {
     public String loginForm() {
         return "member/loginForm";
     }
+
+    /**
+     * 회원가입, 로그인/로그아웃 띄우기 용
+     */
+    @GetMapping("")
+    public String membersPage() {
+        return "member/index";
+    }
 }

@@ -22,6 +22,6 @@ public record CustomUserDetails(Member member) implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return member.getNickname();
     }
 }

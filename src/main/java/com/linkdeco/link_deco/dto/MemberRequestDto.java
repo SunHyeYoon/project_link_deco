@@ -2,7 +2,6 @@ package com.linkdeco.link_deco.dto;
 
 import com.linkdeco.link_deco.common.ValidationConstants;
 import com.linkdeco.link_deco.domain.Member;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

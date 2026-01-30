@@ -2,13 +2,11 @@ package com.linkdeco.link_deco.service;
 
 import com.linkdeco.link_deco.domain.Member;
 import com.linkdeco.link_deco.dto.MemberRequestDto;
-import com.linkdeco.link_deco.global.validator.SignupValidator;
 import com.linkdeco.link_deco.repository.MemberRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 @Service
 @RequiredArgsConstructor

@@ -3,11 +3,13 @@ package com.linkdeco.link_deco.global.security;
 import com.linkdeco.link_deco.domain.Member;
 import com.linkdeco.link_deco.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+@NullMarked
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -21,5 +23,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new CustomUserDetails(member);
     }
-
 }

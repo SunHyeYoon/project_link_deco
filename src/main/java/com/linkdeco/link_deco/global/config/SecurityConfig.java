@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/members/logout", "/members/my-page").authenticated() // 로그인이 필요한 곳
+                        .requestMatchers("/members/my-page/**").authenticated() // 로그인이 필요한 곳
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
@@ -27,11 +27,10 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/members/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/members")
                         .invalidateHttpSession(true)    // 세션 무효화
                         .deleteCookies("JSESSIONID")    // 쿠키 삭제
                 );
-
         return http.build();
     }
 }

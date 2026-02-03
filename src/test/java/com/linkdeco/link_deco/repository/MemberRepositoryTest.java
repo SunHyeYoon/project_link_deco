@@ -42,7 +42,7 @@ class MemberRepositoryTest {
 
     @Test
     @DisplayName("존재하지 않는 이메일로 조회하면 Empty를 반환한다")
-    void findByEmail_notFound() {
+    void findByEmail_NotFound() {
         // when
         Optional<Member> found = memberRepository.findByEmail("notexist@example.com");
 

@@ -3,10 +3,12 @@ package com.linkdeco.link_deco.global.validator;
 import com.linkdeco.link_deco.dto.MemberRequestDto;
 import com.linkdeco.link_deco.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@NullMarked
 @Component
 @RequiredArgsConstructor
 public class SignupValidator implements Validator {

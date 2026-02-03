@@ -34,10 +34,11 @@ class SecurityConfigTest {
 
     @Test
     @DisplayName("누구나 접근 가능한 페이지(/)는 200 OK를 반환한다")
-    void permitAllPage_IsAccessible() throws Exception {
+    void home_IsAccessible() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk());
     }
+
     @Test
     @DisplayName("인증이 필요한 페이지(/members/my-page) 접근 시 로그인 페이지로 리다이렉트된다")
     void loginRequiredPage_RedirectToLoginPage() throws Exception {

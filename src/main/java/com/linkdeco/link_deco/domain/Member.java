@@ -24,13 +24,21 @@ public class Member extends BaseTimeEntity {
     private String nickname;
 
     @Column(length = 500)
-    private String imageUrl;
+    private String profileImage;
 
     @Builder
-    public Member(String email, String password, String nickname, String imageUrl) {
+    public Member(String email, String password, String nickname, String profileImage) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.imageUrl = imageUrl;
+        this.profileImage = profileImage;
+    }
+
+    public void updateProfileImage(String imageUrl) {
+        this.profileImage = imageUrl;
+    }
+
+    public String getProfileImageKey() {
+        return profileImage.substring(profileImage.lastIndexOf("/") + 1);
     }
 }

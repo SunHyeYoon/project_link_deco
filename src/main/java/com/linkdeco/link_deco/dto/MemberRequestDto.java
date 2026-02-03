@@ -32,15 +32,15 @@ public class MemberRequestDto {
             message = "닉네임은 공백 없이 2자 이상 10자 이하여야 합니다.")
     private String nickname;
 
-    @Size(max = ValidationConstants.MAX_IMAGE_URL_LENGTH)
-    private String imageUrl;
+//    @Size(max = ValidationConstants.MAX_IMAGE_URL_LENGTH)
+//    private String profileImage;
 
     public Member toEntity(String encodedPassword) {
         return Member.builder()
                 .email(this.getEmail())
                 .password(encodedPassword)
                 .nickname(this.getNickname())
-                .imageUrl(this.getImageUrl())
+//                .profileImage(this.getProfileImage())
                 .build();
     }
 }

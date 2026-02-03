@@ -13,21 +13,30 @@
 <body>
 <div class="container">
     <h2>회원가입</h2>
-    <form th:action="@{/members/signup}" th:object="${memberRequestDto}" method="post">
+    <form th:action="@{/members/signup}" th:object="${memberRequestDto}" method="post" enctype="multipart/form-data">
+
+        <div>
+            <img id="preview" th:src="${defaultProfileImage}"
+                 style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd;">
+        </div>
+
+        <input type="file" name="profileImage" id="imageInput" accept="image/*" onchange="readURL(this);"
+               style="padding: 0;">
+
+        <span id="deleteBtn" onclick="resetImage()"
+              style="display: inline-block; margin-bottom: 10px; color: #ccc; cursor: default; font-size: 14px; text-decoration: none; transition: 0.2s;">
+            기본 이미지로 변경
+        </span>
 
         <div>
             <label>이메일</label>
             <input type="text" th:field="*{email}" placeholder="이메일을 입력하세요" required>
             <div class="field-error" th:errors="*{email}">이메일 오류</div>
-        </div>
 
-        <div>
             <label>비밀번호</label>
             <input type="password" th:field="*{password}" placeholder="비밀번호를 입력하세요" required>
             <div class="field-error" th:errors="*{password}">비밀번호 오류</div>
-        </div>
 
-        <div>
             <label>닉네임</label>
             <input type="text" th:field="*{nickname}" placeholder="닉네임을 입력하세요" required>
             <div class="field-error" th:errors="*{nickname}">닉네임 오류</div>
@@ -37,13 +46,46 @@
     </form>
     <p><a th:href="@{/members/login}">이미 계정이 있으신가요? 로그인</a></p>
 </div>
-</body>
-</html>
 
-<script>
+<script th:inline="javascript">
+    const defaultImg = /*[[${defaultProfileImage}]]*/ '/images/default.png';
+    const deleteBtn = document.getElementById('deleteBtn');
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+
+                // 활성화 상태로 변경
+                deleteBtn.style.color = "#000000";
+                deleteBtn.style.cursor = "pointer";
+                deleteBtn.style.pointerEvents = "auto";
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function resetImage() {
+        if (imageInput.value === "") return;
+
+        imageInput.value = "";
+        preview.src = defaultImg;
+
+        // 비활성화 상태(회색)로 복구
+        deleteBtn.style.color = "#ccc";
+        deleteBtn.style.cursor = "default";
+        deleteBtn.style.textDecoration = "none";
+    }
+
     // 페이지가 로드될 때, 브라우저 주소창의 히스토리를 현재 URL로 덮어씌웁니다.
     // 이렇게 하면 F5를 눌렀을 때 POST(데이터 전송)가 아닌 GET(페이지 요청)이 실행됩니다.
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
+
+</body>
+</html>

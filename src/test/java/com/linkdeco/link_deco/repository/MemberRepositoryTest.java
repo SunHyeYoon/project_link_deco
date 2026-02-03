@@ -78,7 +78,7 @@ class MemberRepositoryTest {
                 .email("test@example.com")
                 .password("password123")
                 .nickname("testuser")
-                .imageUrl("http://example.com/image.jpg")
+                .profileImage("http://example.com/image.jpg")
                 .build();
 
         // when
@@ -89,6 +89,6 @@ class MemberRepositoryTest {
         assertThat(saved.getEmail()).isEqualTo("test@example.com");
         assertThat(saved.getPassword()).isEqualTo("password123");
         assertThat(saved.getNickname()).isEqualTo("testuser");
-        assertThat(saved.getImageUrl()).isEqualTo("http://example.com/image.jpg");
+        assertThat(saved.getProfileImage()).isEqualTo("http://example.com/image.jpg");
     }
 }

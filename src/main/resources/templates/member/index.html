@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- 반드시 이 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Index</title>
+    <link rel="stylesheet" th:href="@{/common.css}">
+</head>
+<body>
+
+<div class="viewport-wrapper">
+    <div class="app">
+        <header class="header">
+            <h1>LinkDeco</h1>
+            <p>모바일 중심 웹</p>
+        </header>
+
+        <main class="content">
+            <section class="card">
+                <h2>환영합니다</h2>
+                <p>PC에서도 모바일 UI처럼 보이는 화면입니다.</p>
+            </section>
+            <div sec:authorize="isAnonymous()">
+                <a th:href="@{/members/signup}">회원가입</a>
+                <a th:href="@{/members/login}">로그인</a>
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
+                <p><span sec:authentication="name"></span>님 환영합니다!</p>
+                <form sec:authorize="isAuthenticated()" th:action="@{/members/logout}" method="post" style="display: inline;">
+                    <button type="submit">로그아웃</button>
+                </form>
+            </div>
+
+        </main>
+
+        <nav class="bottom-nav">
+            <span>🏠</span>
+            <span>🔍</span>
+            <span>➕</span>
+            <span>❤️</span>
+            <span>👤</span>
+        </nav>
+    </div>
+</div>
+
+</body>
+</html>
